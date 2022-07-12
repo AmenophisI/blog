@@ -9,7 +9,7 @@ class connect
     //ユーザ名
     const USER = "root";
     //パスワード
-    const PASS = "";
+    const PASS = "root";
 
     //プロパティ DBに接続した後、そのDBを操作するための情報を代入しておく
     private $dbh;
