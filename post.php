@@ -49,7 +49,21 @@ include "lib/nav.php";
     <div class="row">
         <div class="col-md-12">
 
-            <p>本文がここに入ります。</p>
+            <h1>記事の投稿</h1>
+
+            <form action="post.php" method="post">
+                <div class="mb-3">
+                    <label class="form-label">タイトル</label>
+                    <input type="text" name="title" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">本文</label>
+                    <textarea name="body" class="form-control" rows="10"></textarea>
+                </div>
+                <div class="mb-3">
+                    <button type="submit" class="btn btn-primary">投稿する</button>
+                </div>
+            </form>
 
         </div>
 
