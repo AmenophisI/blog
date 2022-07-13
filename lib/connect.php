@@ -12,7 +12,8 @@ class connect
     const PASS = "root";
 
     //プロパティ DBに接続した後、そのDBを操作するための情報を代入しておく
-    private $dbh;
+    //protectedにすることでそのクラス自身と継承したクラスで参照できる
+    protected $dbh;
 
     //コンスタラクタ インスタンスが作成された時に自動的に実行されるメソッド
     public function __construct()
