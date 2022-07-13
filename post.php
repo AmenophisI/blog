@@ -1,5 +1,31 @@
 <?php
 include "lib/secure.php";
+include "lib/connect.php";
+
+$title = "";
+$body = "";
+$title_alert = "";
+$body_alert = "";
+
+if (!empty($_POST['title']) && !empty($_POST['body'])) {
+    $title = $_POST['title'];
+    $body = $_POST['body'];
+    $db=new connect();
+    $sql="insert into articles (title, body, created_at, updated_at) values (:title, :body, NOW(), NOW())";
+    $result=$db->query($sql,array('title'=>$title,'body'=>$body));
+    header('Location:backend.php');
+}elseif (!empty($_POST)){
+    if(!empty($_POST['title'])){
+        $title=$_POST['title'];
+    }else{
+        $title_alert="タイトルを入力してください";
+    }
+    if(!empty($_POST['body'])){
+        $body=$_POST['body'];
+    }else{
+        $body_alert="本文を入力してください";
+    }
+}
 ?>
 <!doctype html>
 <html lang="ja">
@@ -54,11 +80,21 @@ include "lib/nav.php";
             <form action="post.php" method="post">
                 <div class="mb-3">
                     <label class="form-label">タイトル</label>
-                    <input type="text" name="title" class="form-control">
+                    <?php
+                    if(!empty($title_alert)){
+                        echo "<div class='alert alert-danger'>{$title_alert}</div>";
+                    }
+                    ?>
+                    <input type="text" name="title" class="form-control" value="<?=$_POST['title'] ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">本文</label>
-                    <textarea name="body" class="form-control" rows="10"></textarea>
+                    <?php
+                    if(!empty($body_alert)){
+                        echo "<div class='alert alert-danger'>{$body_alert}</div>";
+                    }
+                    ?>
+                    <textarea name="body" class="form-control" rows="10"><?=$_POST['body'] ?></textarea>
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">投稿する</button>
