@@ -32,4 +32,25 @@ class QueryArticle extends connect
             $stmt->execute();
         }
     }
+
+    public function findAll()
+    {
+        $stmt = $this->dbh->prepare("SELECT * FROM articles ORDER BY id");
+        $stmt->execute();
+        //結果セット全てを配列として取得
+        $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $articles = [];
+        //結果セットの配列が全て$resultsに入っているので、それをArticleクラスのインスタンスにして配列にする
+        foreach ($results as $result) {
+            $article = new Article();
+            $article->setId('id');
+            $article->setTitle('title');
+            $article->setBody('body');
+            $article->setCategoryId('category_id');
+            $article->setCreatedId('created_id');
+            $article->setUpdatedId('updated_id');
+            $articles[] = $article;
+        }
+        return $articles;
+    }
 }
