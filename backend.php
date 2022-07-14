@@ -1,5 +1,13 @@
 <?php
 include "lib/secure.php";
+include 'lib/connect.php';
+include 'lib/QueryArticle.php';
+include 'lib/Article.php';
+
+//記事一覧を取得
+$queryArticle = new QueryArticle();
+$articles = $queryArticle->findAll();
+print_r($articles);
 ?>
 <!doctype html>
 <html lang="ja">
@@ -48,12 +56,39 @@ include "lib/nav.php";
 <main class="container">
     <div class="row">
         <div class="col-md-12">
+            <?php if ($articles): ?>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>タイトル</th>
+                        <th>本文</th>
+                        <th>作成日</th>
+                        <th>更新日</th>
+                        <th>編集</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach ($articles as $article): ?>
+                        <tr>
+                            <td><?php echo $article->getId() ?></td>
+                            <td><?php echo $article->getTitle() ?></td>
+                            <td><?php echo $article->getBody() ?></td>
+                            <td><?php echo $article->getCreatedAt() ?></td>
+                            <td><?php echo $article->getUpdatedAt() ?></td>
+                            <td><a href="edit.php?id=<?php echo $article->getId() ?>" class="btn btn-success">編集</a></td>
+                        </tr>
+                    <?php endforeach ?>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <div class="alert alert-info">
+                    <p>記事はありません。</p>
+                </div>
+            <?php endif ?>
+            </div>
 
-            <p>本文がここに入ります。</p>
-
-        </div>
-
-    </div><!-- /.row -->
+        </div><!-- /.row -->
 
 </main><!-- /.container -->
 

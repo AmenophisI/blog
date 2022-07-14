@@ -88,7 +88,7 @@ include "lib/nav.php";
                         echo "<div class='alert alert-danger'>{$title_alert}</div>";
                     }
                     ?>
-                    <input type="text" name="title" class="form-control" value="<?= $_POST['title'] ?>">
+                    <input type="text" name="title" class="form-control" value="<?= $title ?>">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">本文</label>
@@ -97,7 +97,7 @@ include "lib/nav.php";
                         echo "<div class='alert alert-danger'>{$body_alert}</div>";
                     }
                     ?>
-                    <textarea name="body" class="form-control" rows="10"><?= $_POST['body'] ?></textarea>
+                    <textarea name="body" class="form-control" rows="10"><?= $body ?></textarea>
                 </div>
                 <div class="mb-3">
                     <button type="submit" class="btn btn-primary">投稿する</button>

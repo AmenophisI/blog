@@ -43,12 +43,12 @@ class QueryArticle extends connect
         //結果セットの配列が全て$resultsに入っているので、それをArticleクラスのインスタンスにして配列にする
         foreach ($results as $result) {
             $article = new Article();
-            $article->setId('id');
-            $article->setTitle('title');
-            $article->setBody('body');
-            $article->setCategoryId('category_id');
-            $article->setCreatedId('created_id');
-            $article->setUpdatedId('updated_id');
+            $article->setId($result['id']);
+            $article->setTitle($result['title']);
+            $article->setBody($result['body']);
+            $article->setCategoryId($result['category_id']);
+            $article->setCreatedAt($result['created_at']);
+            $article->setUpdatedAt($result['updated_at']);
             $articles[] = $article;
         }
         return $articles;

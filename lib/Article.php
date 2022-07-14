@@ -7,8 +7,8 @@ class Article
     private $title;
     private $body;
     private $category_id;
-    private $created_id;
-    private $updated_id;
+    private $created_at;
+    private $updated_at;
 
     //save()が呼び出されるとQueryArticleクラスのインスタンスを作成する
     //QueryArticleは実際にテーブルの操作を行なうクラス
@@ -27,6 +27,7 @@ class Article
     {
         return $this->id;
     }
+
 
     /**
      * @param mixed $id
@@ -87,32 +88,32 @@ class Article
     /**
      * @return mixed
      */
-    public function getCreatedId()
+    public function getCreatedAt()
     {
-        return $this->created_id;
+        return $this->created_at;
     }
 
     /**
-     * @param mixed $created_id
+     * @param mixed $created_at
      */
-    public function setCreatedId($created_id): void
+    public function setCreatedAt($created_at): void
     {
-        $this->created_id = $created_id;
+        $this->created_at = $created_at;
     }
 
     /**
      * @return mixed
      */
-    public function getUpdatedId()
+    public function getUpdatedAt()
     {
-        return $this->updated_id;
+        return $this->updated_at;
     }
 
     /**
-     * @param mixed $updated_id
+     * @param mixed $updated_at
      */
-    public function setUpdatedId($updated_id): void
+    public function setUpdatedAt($updated_at): void
     {
-        $this->updated_id = $updated_id;
+        $this->updated_at = $updated_at;
     }
 }
