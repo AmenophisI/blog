@@ -7,6 +7,7 @@ class Article
     private $title;
     private $body;
     private $category_id;
+    private $file;
     private $created_at;
     private $updated_at;
 
@@ -99,6 +100,22 @@ class Article
     public function setCreatedAt($created_at): void
     {
         $this->created_at = $created_at;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * @param mixed $file
+     */
+    public function setFile($file): void
+    {
+        $this->file = $file;
     }
 
     /**

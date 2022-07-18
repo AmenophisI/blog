@@ -20,10 +20,11 @@ class QueryArticle extends connect
     //保持している$articleにIDがあれば上書きを、なければ新規作成する
     public function save()
     {
+        $title = $this->article->getTitle();
+        $body = $this->article->getBody();
+        $file_name = null;
         if ($this->article->getId()) {
             $id = $this->article->getId();
-            $title = $this->article->getTitle();
-            $body = $this->article->getBody();
             $stmt = $this->dbh->prepare("UPDATE articles
                 SET title=:title, body=:body, updated_at=NOW() WHERE id=:id");
             $stmt->bindParam(':title', $title, PDO::PARAM_STR);
@@ -31,12 +32,40 @@ class QueryArticle extends connect
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
         } else {
-            $title = $this->article->getTitle();
-            $body = $this->article->getBody();
+            if ($file = $this->article->getFile()) {
+                $old_name = $file['tmp_name'];
+                $new_name = date('YmdHis') . mt_rand();
+
+                $is_upload = false;
+
+                $type = exif_imagetype($old_name);
+
+                switch ($type) {
+                    case IMAGETYPE_JPEG:
+                        $new_name .= '.jpeg';
+                        $is_upload = true;
+                        break;
+                    case IMAGETYPE_GIF:
+                        $new_name .= '.gif';
+                        $is_upload = true;
+                        break;
+                    case IMAGETYPE_PNG:
+                        $new_name .= '.png';
+                        $is_upload = true;
+                        break;
+                }
+
+                if ($is_upload && move_uploaded_file($old_name, __DIR__ . '/../album/' . $new_name)) {
+                    $this->article->setFile($new_name);
+                    $file_name = $this->article->getFile();
+                }
+            }
+
             $stmt = $this->dbh->prepare("INSERT INTO articles (title, body, created_at, updated_at)
                 VALUES (:title, :body, NOW(), NOW())");
             $stmt->bindParam(':title', $title, PDO::PARAM_STR);
             $stmt->bindParam(':body', $body, PDO::PARAM_STR);
+            $stmt->bindParam('file_name',$file_name,PDO::PARAM_STR);
             $stmt->execute();
         }
     }
