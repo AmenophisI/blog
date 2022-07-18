@@ -7,7 +7,6 @@ include 'lib/Article.php';
 //記事一覧を取得
 $queryArticle = new QueryArticle();
 $articles = $queryArticle->findAll();
-print_r($articles);
 ?>
 <!doctype html>
 <html lang="ja">
